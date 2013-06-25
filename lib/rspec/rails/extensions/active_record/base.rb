@@ -7,11 +7,17 @@ module RSpec
           #
           # @example
           #
-          #     ModelClass.should have(:no).records
-          #     ModelClass.should have(1).record
-          #     ModelClass.should have(n).records
-          def records
-            find(:all)
+          #     expect(ModelClass).to have(:no).records
+          #     expect(ModelClass).to have(1).record
+          #     expect(ModelClass).to have(n).records
+          if ::Rails::VERSION::STRING > '4'
+            def records
+              all
+            end
+          else
+            def records
+              find(:all)
+            end
           end
           alias :record :records
         end
